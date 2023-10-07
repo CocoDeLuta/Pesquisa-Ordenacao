@@ -2,6 +2,9 @@
 // de funções em outros arquivos.
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <math.h>
+#include <locale.h>
 
 #include "Algoritmos/PrintArray.h"
 
@@ -13,4 +16,10 @@
 
 #include "Algoritmos/RadixSort.h"
 
-#include "Utils/FraseCor.h"
+#include "Algoritmos/HeapSort.h"
+
+#include "Utils/Enter.h"
+
+#include "Utils/OrdemFile.h"
+
+#include "Utils/TransferirVetor.h"

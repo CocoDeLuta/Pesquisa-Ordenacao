@@ -2,29 +2,28 @@
 #include <malloc.h>
 #include <math.h>
 
-void radixSort(int A[], int tamanho){
-  int base = 10, r;
-  int digit = 3;
-  int *B = (int *)malloc(tamanho*sizeof(int)); 
-  int *C = (int *)malloc(tamanho*sizeof(int));
-  for(int m = 0; m < digit; m++){
-    for(int j = 0; j < tamanho; j++){
-      r = (A[j] / (int)(pow(10.0,m))) % base;
-      ++C[r];
+//função radixSort
+void radixSort(int *vetor, int tam) {
+    int i, exp = 1, maior = vetor[0];
+    int *aux;
+    aux = (int*) malloc(tam * sizeof (int));
+
+    for (i = 0; i < tam; i++) {
+        if (vetor[i] > maior)
+            maior = vetor[i];
     }
 
-    for(int i = 1; i < base; i++){
-      C[i] += C[i - 1];
+    while (maior / exp > 0) {
+        int bucket[10] = {0};
+        for (i = 0; i < tam; i++)
+            bucket[(vetor[i] / exp) % 10]++;
+        for (i = 1; i < 10; i++)
+            bucket[i] += bucket[i - 1];
+        for (i = tam - 1; i >= 0; i--)
+            aux[--bucket[(vetor[i] / exp) % 10]] = vetor[i];
+        for (i = 0; i < tam; i++)
+            vetor[i] = aux[i];
+        exp *= 10;
     }
-
-    for(int j = tamanho-1; j >= 0; --j){
-      r = (A[j] / (int)(pow(10.0,m))) % base;
-      int i = --C[r];
-      B[i] = A[j];
-    }
-
-    for( int j = 0; j < tamanho; ++j){
-      A[j] = B[j];
-    }
-  }
+    free(aux);
 }

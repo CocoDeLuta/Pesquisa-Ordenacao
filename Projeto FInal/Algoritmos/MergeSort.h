@@ -1,46 +1,51 @@
 #include <stdio.h>
 
-void merge(int vetor[], int esq, int meio, int dir){
-  int auxSize = dir - esq +1;
-  int aux[auxSize];
+void merge(int vetor[], int esquerda, int meio, int direita){
+  int i, j, k;
+  int n1 = meio - esquerda + 1;
+  int n2 =  direita - meio;
 
-  for(int i = esq; i<=dir; i++){
-    aux[i-esq] = vetor[i];
-  }
+  int L[n1], R[n2];
 
-  int i = esq;
-  int j = meio+1;
-  int k = esq;
-  while(i <= meio && j <= dir){
-    if(aux[i - esq] <= aux[j - esq]){
-      vetor[k] = aux[i - esq];
+  for (i = 0; i < n1; i++)
+    L[i] = vetor[esquerda + i];
+  for (j = 0; j < n2; j++)
+    R[j] = vetor[meio + 1+ j];
+
+  i = 0;
+  j = 0;
+  k = esquerda;
+  while (i < n1 && j < n2){
+    if (L[i] <= R[j]){
+      vetor[k] = L[i];
       i++;
-    }else{
-      vetor[k] = aux[j - esq];
+    }
+    else{
+      vetor[k] = R[j];
       j++;
     }
     k++;
   }
 
-  while(i <= meio){
-    vetor[k] = aux[i - esq];
+  while (i < n1){
+    vetor[k] = L[i];
     i++;
     k++;
   }
 
-  while(j <= dir){
-    vetor[k] = aux[j - esq];
+  while (j < n2){
+    vetor[k] = R[j];
     j++;
     k++;
   }
 }
 
-
-void mergesort(int vetor[], int esq, int dir){
-  if(esq < dir){
-    int meio = (esq+dir)/2;
-    mergesort(vetor,esq,meio);
-    mergesort(vetor, meio+1, dir);
-    merge(vetor, esq, meio, dir);
+//funcao mergesort
+void mergeSort(int vetor[], int esquerda, int direita){
+  if(esquerda < direita){
+    int meio = (esquerda + direita)/2;
+    mergeSort(vetor, esquerda, meio);
+    mergeSort(vetor, meio+1, direita);
+    merge(vetor, esquerda, meio, direita);
   }
 }
